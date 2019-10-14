@@ -14,6 +14,7 @@ public class MainMessageDigest {
         messageDigest.update(plainText.getBytes(charset));
 
         byte[] hashBytes = messageDigest.digest();
+        System.out.println(hashBytes.length);
         System.out.println(Bytes.convertBytesToHexString(hashBytes));
 
         System.out.println(Bytes.convertBytesToHexString(messageDigest.digest(plainText.getBytes(charset))));

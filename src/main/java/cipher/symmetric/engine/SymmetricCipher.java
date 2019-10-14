@@ -41,25 +41,26 @@ public abstract class SymmetricCipher {
     public static SecretKey loadKeyFile(String fileName) throws Exception {
         /* Load secret key from file */
         InputStream in = new BufferedInputStream(new FileInputStream(fileName));
-
-        byte[] buffer = new byte[128];
-        List<Byte> list = new ArrayList<Byte>();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+//        List<Byte> list = new ArrayList<Byte>();
 
         int read = 0;
         try {
             while ((read = in.read(buffer)) != -1) {
-                for (int i = 0; i < read; i++) {
-                    list.add(buffer[i]);
-                }
+                out.write(buffer, 0, read);
+//                for (int i = 0; i < read; i++) {
+//                    list.add(buffer[i]);
+//                }
             }
         } finally {
             in.close();
         }
 
-        byte[] loadedKeyDataFromFile = new byte[list.size()];
-        for (int i = 0; i < loadedKeyDataFromFile.length; i++) {
-            loadedKeyDataFromFile[i] = list.get(i);
-        }
+        byte[] loadedKeyDataFromFile = out.toByteArray();
+//        for (int i = 0; i < loadedKeyDataFromFile.length; i++) {
+//            loadedKeyDataFromFile[i] = list.get(i);
+//        }
 
         StringTokenizer st = new StringTokenizer(fileName, ".");
         st.nextToken();
